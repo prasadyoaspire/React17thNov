@@ -1,11 +1,13 @@
 package com.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.service.CalculatorService;
@@ -36,7 +38,7 @@ public class CalculatorServiceTest {
 		cal = null;
 	}
 	
-	
+	@Disabled
 	@Test
 	public void testSum() {		
 		System.out.println("testSum() called");
@@ -60,4 +62,16 @@ public class CalculatorServiceTest {
 		int actualResult = cal.sum(10, -20);		
 		assertEquals(-10,actualResult);
 	}
+	
+	@Test
+	public void testDiv() {
+		int actualResult = cal.div(20, 10);
+		assertEquals(2,actualResult);
+	}
+	
+	@Test
+	public void testDivWithException() {
+		assertThrows(ArithmeticException.class, ()-> cal.div(20, 0));		
+	}
+	
 }
