@@ -2,14 +2,18 @@ package com.ecom.service;
 
 import com.ecom.dao.ProductDao;
 import com.ecom.dto.Product;
+import com.ecom.exception.ProductNotFoundException;
 
 public class ProductService {
 
-	public float buyProduct(int productId, int quantity) {		
+	public float buyProduct(int productId, int quantity) throws ProductNotFoundException {		
 		
 		//get the product price from the database
 		ProductDao productDao = new ProductDao();
 		Product product = productDao.getProductDetails(productId);
+		if(product==null) {
+			throw new ProductNotFoundException("Product not found with id: "+productId);
+		}
 		
 		float productPrice = product.getProductPrice();
 		
@@ -22,5 +26,11 @@ public class ProductService {
 		//return final amount		
 		return finalAmount;
 		
+	}
+	
+	public void saveProduct(Product product) {
+		ProductDao productDao = new ProductDao();
+		
+		productDao.addProduct(product);
 	}
 }
